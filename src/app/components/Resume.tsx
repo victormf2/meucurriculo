@@ -13,29 +13,41 @@ export interface ResumeProps {
 
 export function Resume({ resume }: ResumeProps) {
   return (
-    <main className="grid w-[210mm] bg-white">
-      <Profile className="" personalInfo={resume.profile} />
-      <Contact className="" contact={resume.contact} />
-      <Skills className="" skills={resume.skills} />
-      <div className="">
-        {resume.professional_experience.map((professionalExperience, index) => (
-          <ProfessionalExperience
-            className=""
-            key={index}
-            professionalExperience={professionalExperience}
-          />
-        ))}
-      </div>
-    </main>
+    <div className="flex w-[210mm] flex-row bg-white">
+      <aside className="shrink-0 grow-0">
+        <Contact className="" contact={resume.contact} />
+        <Skills className="" skills={resume.skills} />
+      </aside>
+      <main className="grow">
+        <Profile className="" profile={resume.profile} />
+        <section className="">
+          <h1>Experiência profissional</h1>
+          {resume.professional_experience.map(
+            (professionalExperience, index) => (
+              <ProfessionalExperience
+                className=""
+                key={index}
+                professionalExperience={professionalExperience}
+              />
+            ),
+          )}
+        </section>
+      </main>
+    </div>
   )
 }
 
-interface PersonalProps {
-  personalInfo: ProfileInfo
+interface ProfileProps {
+  profile: ProfileInfo
   className: string
 }
-function Profile({ personalInfo, className }: PersonalProps) {
-  return <h1 className={clsx(className)}>{personalInfo.name}</h1>
+function Profile({ profile, className }: ProfileProps) {
+  return (
+    <section className={clsx(className)}>
+      <h1>Perfil</h1>
+      <p>{profile.description}</p>
+    </section>
+  )
 }
 
 interface ContactProps {
@@ -45,14 +57,14 @@ interface ContactProps {
 function Contact({ contact, className }: ContactProps) {
   const contactItems = Object.values(contact)
   return (
-    <div className={clsx(className)}>
-      <h2>Contato</h2>
+    <section className={clsx(className)}>
+      <h1>Contato</h1>
       <ul>
         {contactItems.map((contactItem, index) => (
           <li key={index}>{contactItem}</li>
         ))}
       </ul>
-    </div>
+    </section>
   )
 }
 
@@ -72,12 +84,12 @@ function Skills({ skills, className }: SkillsProps) {
     { title: 'Outros', items: skills.others },
   ]
   return (
-    <div className={clsx(className)}>
-      <h2>Habilidades</h2>
+    <section className={clsx(className)}>
+      <h1>Habilidades</h1>
       {skillsList.map((item, index) => (
         <SkillSection className="" key={index} {...item} />
       ))}
-    </div>
+    </section>
   )
 }
 
@@ -88,14 +100,14 @@ interface SkillSectionProps {
 }
 function SkillSection({ title, items, className }: SkillSectionProps) {
   return (
-    <div className={clsx(className)}>
-      <h3>{title}</h3>
+    <section className={clsx(className)}>
+      <h2>{title}</h2>
       <ul>
         {items.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
       </ul>
-    </div>
+    </section>
   )
 }
 
@@ -108,23 +120,23 @@ function ProfessionalExperience({
   className,
 }: ProfessionalExperienceProps) {
   return (
-    <div className={clsx(className)}>
-      <h3>
+    <section className={clsx(className)}>
+      <h2>
         {job.title} - {company.name}
-      </h3>
+      </h2>
       <span>
         {job.from} - {job.to}
       </span>
       <p>{job.description}</p>
 
-      <div>
-        <h4>Principais projetos</h4>
+      <section>
+        <h3>Principais projetos</h3>
         <ul>
           {main_projects_and_achievements.map((project, index) => (
             <li key={index}>{project}</li>
           ))}
         </ul>
-      </div>
-    </div>
+      </section>
+    </section>
   )
 }

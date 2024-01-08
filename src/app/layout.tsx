@@ -16,11 +16,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="pt">
       <body
         className={clsx(
           inter.className,
-          'flex flex-col items-center bg-red-300'
+          'flex flex-col items-center bg-red-300',
         )}
       >
         {children}
